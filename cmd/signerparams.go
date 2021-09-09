@@ -22,9 +22,9 @@ import (
 
 	"github.com/nats-io/jwt/v2"
 
+	"github.com/kbehouse/nsc/cmd/store"
 	cli "github.com/nats-io/cliprompts/v2"
 	"github.com/nats-io/nkeys"
-	"github.com/nats-io/nsc/cmd/store"
 )
 
 // SignerParams is shared UI for a signer (-K flag). The key

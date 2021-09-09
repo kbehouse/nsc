@@ -22,7 +22,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nats-io/nsc/cmd/store"
+	"github.com/kbehouse/nsc/cmd/store"
 
 	nats "github.com/nats-io/nats.go"
 	"github.com/spf13/cobra"

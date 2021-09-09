@@ -25,10 +25,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kbehouse/nsc/cmd/store"
 	"github.com/mitchellh/go-homedir"
 	"github.com/nats-io/jwt/v2"
 	"github.com/nats-io/nats.go"
-	"github.com/nats-io/nsc/cmd/store"
 )
 
 //NscHomeEnv the folder for the config file

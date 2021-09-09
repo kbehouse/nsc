@@ -23,8 +23,8 @@ import (
 	"path/filepath"
 	"sort"
 
+	"github.com/kbehouse/nsc/cmd/store"
 	"github.com/nats-io/jwt/v2"
-	"github.com/nats-io/nsc/cmd/store"
 )
 
 type MemResolverConfigBuilder struct {

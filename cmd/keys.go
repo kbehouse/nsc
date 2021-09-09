@@ -16,7 +16,7 @@
 package cmd
 
 import (
-	"github.com/nats-io/nsc/cmd/store"
+	"github.com/kbehouse/nsc/cmd/store"
 	"github.com/spf13/cobra"
 )
 

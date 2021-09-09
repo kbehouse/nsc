@@ -1,4 +1,4 @@
-module github.com/nats-io/nsc
+module github.com/kbehouse/nsc
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect

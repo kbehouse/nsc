@@ -19,7 +19,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/nats-io/nsc/cmd/store"
+	"github.com/kbehouse/nsc/cmd/store"
 	"github.com/stretchr/testify/require"
 )
 

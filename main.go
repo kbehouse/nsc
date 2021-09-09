@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/nats-io/nsc/cmd"
+	"github.com/kbehouse/nsc/cmd"
 )
 
 // the cli injects the version

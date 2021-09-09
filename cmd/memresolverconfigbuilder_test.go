@@ -21,8 +21,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/kbehouse/nsc/cmd/store"
 	"github.com/nats-io/nats-server/v2/server"
-	"github.com/nats-io/nsc/cmd/store"
 	"github.com/stretchr/testify/require"
 )
 

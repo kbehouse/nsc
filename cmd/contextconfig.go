@@ -22,7 +22,7 @@ import (
 	"path/filepath"
 	"sort"
 
-	"github.com/nats-io/nsc/cmd/store"
+	"github.com/kbehouse/nsc/cmd/store"
 )
 
 type ContextConfig struct {

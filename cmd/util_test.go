@@ -29,13 +29,13 @@ import (
 	"testing"
 	"time"
 
+	"github.com/kbehouse/nsc/cmd/store"
 	cli "github.com/nats-io/cliprompts/v2"
 	jwt1 "github.com/nats-io/jwt"
 	"github.com/nats-io/jwt/v2"
 	"github.com/nats-io/nats-server/v2/server"
 	nats "github.com/nats-io/nats.go"
 	"github.com/nats-io/nkeys"
-	"github.com/nats-io/nsc/cmd/store"
 	"github.com/stretchr/testify/require"
 )
 

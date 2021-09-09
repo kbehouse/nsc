@@ -22,9 +22,9 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/kbehouse/nsc/cmd/store"
 	cli "github.com/nats-io/cliprompts/v2"
 	"github.com/nats-io/jwt/v2"
-	"github.com/nats-io/nsc/cmd/store"
 )
 
 // GenericClaimsParams - TimeParams and tags

@@ -19,7 +19,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/nats-io/nsc/cmd/store"
+	"github.com/kbehouse/nsc/cmd/store"
 	"github.com/spf13/cobra"
 	"github.com/xlab/tablewriter"
 )

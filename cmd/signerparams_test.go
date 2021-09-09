@@ -21,7 +21,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/nats-io/nsc/cmd/store"
+	"github.com/kbehouse/nsc/cmd/store"
 
 	"github.com/mitchellh/go-homedir"
 	"github.com/nats-io/nkeys"

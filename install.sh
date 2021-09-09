@@ -32,7 +32,7 @@ set -eu
 # guarantees that:
 #    /<owner>/<name>/releases/latest/download/<asset-name>.zip
 # will be available; going via the API we got, for 'latest':
-#    https://github.com/nats-io/nsc/releases/download/0.4.0/nsc-linux-amd64.zip
+#    https://github.com/kbehouse/nsc/releases/download/0.4.0/nsc-linux-amd64.zip
 # ie:
 #    /<owner>/<name>/releases/download/<release>/<asset-name>.zip
 # Inspecting headers, the documented guarantee redirects to the API-returned

@@ -22,8 +22,8 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/kbehouse/nsc/cmd/store"
 	"github.com/nats-io/jwt/v2"
-	"github.com/nats-io/nsc/cmd/store"
 	"github.com/xlab/tablewriter"
 
 	"github.com/spf13/cobra"
