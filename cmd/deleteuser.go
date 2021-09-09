@@ -26,7 +26,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createDeleteUserCmd() *cobra.Command {
+func CreateDeleteUserCmd() *cobra.Command {
 	var params DeleteUserParams
 	cmd := &cobra.Command{
 		Use:   "user",
@@ -48,7 +48,7 @@ nsc delete user -i`,
 }
 
 func init() {
-	deleteCmd.AddCommand(createDeleteUserCmd())
+	deleteCmd.AddCommand(CreateDeleteUserCmd())
 }
 
 type DeleteUserParams struct {

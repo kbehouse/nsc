@@ -162,7 +162,7 @@ func Test_EditOperatorRequireSigningKeys(t *testing.T) {
 	_, _, err = ExecuteCmd(createEditUserCmd(), "--account", "A", "--name", "U", "--tag", "foo")
 	require.NoError(t, err)
 	checkUsr(t, ts, "A")
-	_, _, err = ExecuteCmd(createDeleteUserCmd(), "--account", "A", "--name", "U", "--revoke")
+	_, _, err = ExecuteCmd(CreateDeleteUserCmd(), "--account", "A", "--name", "U", "--revoke")
 	require.NoError(t, err)
 	checkAcc(t, ts, "A")
 	uk, err := nkeys.CreateUser()

@@ -35,7 +35,7 @@ func TestDescribeUser_Single(t *testing.T) {
 	pub := ts.GetUserPublicKey(t, "A", "a")
 	apub := ts.GetAccountPublicKey(t, "A")
 
-	stdout, _, err := ExecuteCmd(createDescribeUserCmd())
+	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd())
 	require.NoError(t, err)
 	// account A public key
 	require.Contains(t, stdout, apub)
@@ -53,7 +53,7 @@ func TestDescribeUserRaw(t *testing.T) {
 	ts.AddUser(t, "A", "U")
 
 	Raw = true
-	stdout, _, err := ExecuteCmd(createDescribeUserCmd())
+	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd())
 	require.NoError(t, err)
 
 	uc, err := jwt.DecodeUserClaims(stdout)
@@ -71,7 +71,7 @@ func TestDescribeUser_Multiple(t *testing.T) {
 	ts.AddUser(t, "A", "a")
 	ts.AddUser(t, "A", "b")
 
-	_, stderr, err := ExecuteCmd(createDescribeUserCmd())
+	_, stderr, err := ExecuteCmd(CreateDescribeUserCmd())
 	require.Error(t, err)
 	require.Contains(t, stderr, "user is required")
 }
@@ -92,7 +92,7 @@ func TestDescribeUser_MultipleWithContext(t *testing.T) {
 
 	pub := ts.GetUserPublicKey(t, "B", "b")
 
-	stdout, _, err := ExecuteCmd(createDescribeUserCmd())
+	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd())
 	require.NoError(t, err)
 	require.Contains(t, stdout, apub)
 	require.Contains(t, stdout, pub)
@@ -108,7 +108,7 @@ func TestDescribeUser_MultipleWithFlag(t *testing.T) {
 	ts.AddUser(t, "B", "b")
 	ts.AddUser(t, "B", "bb")
 
-	_, stderr, err := ExecuteCmd(createDescribeUserCmd(), "--account", "B")
+	_, stderr, err := ExecuteCmd(CreateDescribeUserCmd(), "--account", "B")
 	require.Error(t, err)
 	require.Contains(t, stderr, "user is required")
 
@@ -116,7 +116,7 @@ func TestDescribeUser_MultipleWithFlag(t *testing.T) {
 
 	pub := ts.GetUserPublicKey(t, "B", "bb")
 
-	stdout, _, err := ExecuteCmd(createDescribeUserCmd(), "--account", "B", "--name", "bb")
+	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd(), "--account", "B", "--name", "bb")
 	require.NoError(t, err)
 	require.Contains(t, stdout, apub)
 	require.Contains(t, stdout, pub)
@@ -131,13 +131,13 @@ func TestDescribeUser_MultipleWithBadUser(t *testing.T) {
 	ts.AddAccount(t, "B")
 	ts.AddUser(t, "B", "b")
 
-	_, _, err := ExecuteCmd(createDescribeUserCmd(), "--account", "A")
+	_, _, err := ExecuteCmd(CreateDescribeUserCmd(), "--account", "A")
 	require.Error(t, err)
 
-	_, _, err = ExecuteCmd(createDescribeUserCmd(), "--account", "B", "--name", "a")
+	_, _, err = ExecuteCmd(CreateDescribeUserCmd(), "--account", "B", "--name", "a")
 	require.Error(t, err)
 
-	_, _, err = ExecuteCmd(createDescribeUserCmd(), "--account", "B", "--name", "b")
+	_, _, err = ExecuteCmd(CreateDescribeUserCmd(), "--account", "B", "--name", "b")
 	require.NoError(t, err)
 }
 
@@ -149,7 +149,7 @@ func TestDescribeUser_Interactive(t *testing.T) {
 	ts.AddAccount(t, "B")
 	ts.AddUser(t, "B", "bb")
 
-	_, _, err := ExecuteInteractiveCmd(createDescribeUserCmd(), []interface{}{1, 0})
+	_, _, err := ExecuteInteractiveCmd(CreateDescribeUserCmd(), []interface{}{1, 0})
 	require.NoError(t, err)
 }
 
@@ -164,14 +164,14 @@ func TestDescribeUser_Account(t *testing.T) {
 
 	// signed with default account key
 	ts.AddUser(t, "A", "aa")
-	stdout, _, err := ExecuteCmd(createDescribeUserCmd(), "--account", "A", "--name", "aa")
+	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd(), "--account", "A", "--name", "aa")
 	require.NoError(t, err)
 	require.NotContains(t, stdout, "Issuer Account")
 
 	// signed with a signing key
 	ts.AddUserWithSigner(t, "A", "bb", kp)
 	require.NoError(t, err)
-	stdout, _, err = ExecuteCmd(createDescribeUserCmd(), "--account", "A", "--name", "bb")
+	stdout, _, err = ExecuteCmd(CreateDescribeUserCmd(), "--account", "A", "--name", "bb")
 	require.NoError(t, err)
 	require.Contains(t, stdout, "Issuer Account")
 }
@@ -187,14 +187,14 @@ func TestDescribeRawUser(t *testing.T) {
 
 	// signed with default account key
 	ts.AddUser(t, "A", "aa")
-	stdout, _, err := ExecuteCmd(createDescribeUserCmd(), "--account", "A", "--name", "aa")
+	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd(), "--account", "A", "--name", "aa")
 	require.NoError(t, err)
 	require.NotContains(t, stdout, "Issuer Account")
 
 	// signed with a signing key
 	ts.AddUserWithSigner(t, "A", "bb", kp)
 	require.NoError(t, err)
-	stdout, _, err = ExecuteCmd(createDescribeUserCmd(), "--account", "A", "--name", "bb")
+	stdout, _, err = ExecuteCmd(CreateDescribeUserCmd(), "--account", "A", "--name", "bb")
 	require.NoError(t, err)
 	require.Contains(t, stdout, "Issuer Account")
 }
@@ -240,7 +240,7 @@ func TestDescribeUser_Times(t *testing.T) {
 	_, _, err := ExecuteCmd(createEditUserCmd(), "--time", "16:04:05-17:04:09")
 	require.NoError(t, err)
 
-	stdout, _, err := ExecuteCmd(createDescribeUserCmd(), "--account", "A", "--name", "aa")
+	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd(), "--account", "A", "--name", "aa")
 	require.NoError(t, err)
 	require.Contains(t, stdout, "16:04:05-17:04:09")
 
