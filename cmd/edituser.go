@@ -27,7 +27,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createEditUserCmd() *cobra.Command {
+func CreateEditUserCmd() *cobra.Command {
 	var params EditUserParams
 	cmd := &cobra.Command{
 		Use:   "user",
@@ -81,7 +81,7 @@ nsc edit user --name <n> --rm-response-perms
 }
 
 func init() {
-	editCmd.AddCommand(createEditUserCmd())
+	editCmd.AddCommand(CreateEditUserCmd())
 }
 
 type EditUserParams struct {

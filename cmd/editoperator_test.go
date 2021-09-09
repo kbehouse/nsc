@@ -159,7 +159,7 @@ func Test_EditOperatorRequireSigningKeys(t *testing.T) {
 	_, _, err = ExecuteCmd(CreateAddUserCmd(), "--account", "A", "--name", "U")
 	require.NoError(t, err)
 	checkUsr(t, ts, "A")
-	_, _, err = ExecuteCmd(createEditUserCmd(), "--account", "A", "--name", "U", "--tag", "foo")
+	_, _, err = ExecuteCmd(CreateEditUserCmd(), "--account", "A", "--name", "U", "--tag", "foo")
 	require.NoError(t, err)
 	checkUsr(t, ts, "A")
 	_, _, err = ExecuteCmd(CreateDeleteUserCmd(), "--account", "A", "--name", "U", "--revoke")
@@ -205,7 +205,7 @@ func Test_EditOperatorRequireSigningKeysManaged(t *testing.T) {
 	_, _, err = ExecuteCmd(CreateAddUserCmd(), "--account", "A", "--name", "U")
 	require.NoError(t, err)
 	checkUsr(t, ts, "A")
-	_, _, err = ExecuteCmd(createEditUserCmd(), "--account", "A", "--name", "U", "--tag", "foo")
+	_, _, err = ExecuteCmd(CreateEditUserCmd(), "--account", "A", "--name", "U", "--tag", "foo")
 	require.NoError(t, err)
 	checkUsr(t, ts, "A")
 }

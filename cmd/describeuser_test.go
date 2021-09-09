@@ -237,7 +237,7 @@ func TestDescribeUser_Times(t *testing.T) {
 
 	ts.AddAccount(t, "A")
 	ts.AddUser(t, "A", "aa")
-	_, _, err := ExecuteCmd(createEditUserCmd(), "--time", "16:04:05-17:04:09")
+	_, _, err := ExecuteCmd(CreateEditUserCmd(), "--time", "16:04:05-17:04:09")
 	require.NoError(t, err)
 
 	stdout, _, err := ExecuteCmd(CreateDescribeUserCmd(), "--account", "A", "--name", "aa")

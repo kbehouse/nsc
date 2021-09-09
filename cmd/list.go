@@ -37,7 +37,7 @@ func init() {
 	GetRootCmd().AddCommand(listCmd)
 	listCmd.AddCommand(createListOperatorsCmd())
 	listCmd.AddCommand(createListAccountsCmd())
-	listCmd.AddCommand(createListUsersCmd())
+	listCmd.AddCommand(CreateListUsersCmd())
 }
 
 type EntryInfo struct {
@@ -191,7 +191,7 @@ func ListUsers(s *store.Store, accountName string) ([]*EntryInfo, error) {
 	return infos, nil
 }
 
-func createListUsersCmd() *cobra.Command {
+func CreateListUsersCmd() *cobra.Command {
 	var operator string
 	var account string
 	cmd := &cobra.Command{
