@@ -12,3 +12,6 @@ createDeleteUserCmd -> CreateDeleteUserCmd
 
 createListUsersCmd ->
 CreateListUsersCmd
+
+createPushCmd ->
+CreatePushCmd

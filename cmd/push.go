@@ -32,7 +32,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createPushCmd() *cobra.Command {
+func CreatePushCmd() *cobra.Command {
 	var params PushCmdParams
 	var cmd = &cobra.Command{
 		Short:   "Push an account jwt to an Account JWT Server",
@@ -61,7 +61,7 @@ push -P -A (all accounts)`,
 }
 
 func init() {
-	GetRootCmd().AddCommand(createPushCmd())
+	GetRootCmd().AddCommand(CreatePushCmd())
 }
 
 type PushCmdParams struct {
