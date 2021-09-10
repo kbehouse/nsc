@@ -137,7 +137,7 @@ func Test_SyncManualServer(t *testing.T) {
 func deleteSetup(t *testing.T, del bool) (string, []string, *TestStore) {
 	t.Helper()
 	ts := NewEmptyStore(t)
-	_, _, err := ExecuteCmd(createAddOperatorCmd(), "--name", "OP", "--sys")
+	_, _, err := ExecuteCmd(CreateAddOperatorCmd(), "--name", "OP", "--sys")
 	require.NoError(t, err)
 	serverconf := filepath.Join(ts.Dir, "server.conf")
 	_, _, err = ExecuteCmd(createServerConfigCmd(), "--nats-resolver", "--config-file", serverconf)
@@ -286,7 +286,7 @@ func Test_SyncNatsResolverNoDelete(t *testing.T) {
 func Test_SyncBadUrl(t *testing.T) {
 	ts := NewEmptyStore(t)
 	defer ts.Done(t)
-	_, _, err := ExecuteCmd(createAddOperatorCmd(), "--name", "OP", "--sys")
+	_, _, err := ExecuteCmd(CreateAddOperatorCmd(), "--name", "OP", "--sys")
 	require.NoError(t, err)
 	serverconf := filepath.Join(ts.Dir, "server.conf")
 	_, _, err = ExecuteCmd(createServerConfigCmd(), "--nats-resolver", "--config-file", serverconf)

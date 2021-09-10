@@ -103,7 +103,7 @@ func Test_EditOperatorRequireSigningKeys(t *testing.T) {
 		t.Fatal(err)
 	}
 	// Perform all operations that would end up signing account/user/activation jwt
-	_, _, err = ExecuteCmd(createAddOperatorCmd(), "--name", "O")
+	_, _, err = ExecuteCmd(CreateAddOperatorCmd(), "--name", "O")
 	require.NoError(t, err)
 	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--sk", "generate")
 	require.NoError(t, err)
@@ -193,7 +193,7 @@ func Test_EditOperatorRequireSigningKeysManaged(t *testing.T) {
 	tf := filepath.Join(ts.Dir, "O.jwt")
 	err = Write(tf, []byte(token))
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createAddOperatorCmd(), "--url", tf) // causes a managed store
+	_, _, err = ExecuteCmd(CreateAddOperatorCmd(), "--url", tf) // causes a managed store
 	require.NoError(t, err)
 	// perform operations in a managed store and assure identity is not used
 	_, _, err = ExecuteCmd(CreateAddAccountCmd(), "--name", "A")

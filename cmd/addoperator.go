@@ -27,7 +27,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createAddOperatorCmd() *cobra.Command {
+func CreateAddOperatorCmd() *cobra.Command {
 	var params AddOperatorParams
 	cmd := &cobra.Command{
 		Use:          "operator",
@@ -53,7 +53,7 @@ func createAddOperatorCmd() *cobra.Command {
 }
 
 func init() {
-	addCmd.AddCommand(createAddOperatorCmd())
+	addCmd.AddCommand(CreateAddOperatorCmd())
 }
 
 func JWTUpgradeBannerJWT(ver int) error {

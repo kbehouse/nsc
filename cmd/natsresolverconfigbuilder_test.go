@@ -30,7 +30,7 @@ import (
 func Test_NatsResolverServerParse(t *testing.T) {
 	ts := NewEmptyStore(t)
 	defer ts.Done(t)
-	_, _, err := ExecuteCmd(createAddOperatorCmd(), "--name", "OP", "--sys")
+	_, _, err := ExecuteCmd(CreateAddOperatorCmd(), "--name", "OP", "--sys")
 	require.NoError(t, err)
 	serverconf := filepath.Join(ts.Dir, "server.conf")
 	_, _, err = ExecuteCmd(createServerConfigCmd(), "--nats-resolver", "--config-file", serverconf)

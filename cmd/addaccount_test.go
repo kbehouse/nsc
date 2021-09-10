@@ -140,7 +140,7 @@ func Test_AddAccountManagedStoreWithSigningKey(t *testing.T) {
 	tf := filepath.Join(ts.Dir, "O.jwt")
 	err = Write(tf, []byte(token))
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createAddOperatorCmd(), "--url", tf)
+	_, _, err = ExecuteCmd(CreateAddOperatorCmd(), "--url", tf)
 	require.NoError(t, err)
 	// sign with the signing key
 	inputs := []interface{}{"A", true, "0", "0", 0, string(s1)}

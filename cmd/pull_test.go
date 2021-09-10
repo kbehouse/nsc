@@ -145,7 +145,7 @@ func Test_SyncNewer(t *testing.T) {
 func Test_SyncNewerFromNatsResolver(t *testing.T) {
 	ts := NewEmptyStore(t)
 	defer ts.Done(t)
-	_, _, err := ExecuteCmd(createAddOperatorCmd(), "--name", "OP", "--sys")
+	_, _, err := ExecuteCmd(CreateAddOperatorCmd(), "--name", "OP", "--sys")
 	require.NoError(t, err)
 	ts.SwitchOperator(t, "OP") // switch the operator so ts is in a usable state to obtain operator key
 	serverconf := filepath.Join(ts.Dir, "server.conf")
