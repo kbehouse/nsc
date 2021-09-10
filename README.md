@@ -9,3 +9,6 @@ CreateDescribeUserCmd
 createEditUserCmd -> CreateEditUserCmd
 
 createDeleteUserCmd -> CreateDeleteUserCmd
+
+createListUsersCmd ->
+CreateListUsersCmd
