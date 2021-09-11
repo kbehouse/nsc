@@ -45,8 +45,8 @@ type ToolConfig struct {
 	LastUpdate    int64  `json:"last_update"`
 }
 
-var toolName = strings.ReplaceAll(filepath.Base(os.Args[0]), ".exe", "")
-
+// var toolName = strings.ReplaceAll(filepath.Base(os.Args[0]), ".exe", "")
+var toolName = "nsc"
 var config ToolConfig
 var toolHome string
 var homeEnv string
