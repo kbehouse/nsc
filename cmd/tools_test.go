@@ -45,7 +45,7 @@ func TestPub(t *testing.T) {
 
 	// with the captured ports, regenerate the operator jwt
 	// we only need the client to update
-	_, _, err = ExecuteCmd(createEditOperatorCmd(),
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(),
 		"--service-url", strings.Join(ports.Nats, ","))
 	require.NoError(t, err)
 
@@ -90,7 +90,7 @@ func TestSub(t *testing.T) {
 	ports := ts.RunServerWithConfig(t, conf)
 
 	// with the captured ports, regenerate the operator jwt - we only need the client to update
-	_, _, err = ExecuteCmd(createEditOperatorCmd(),
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(),
 		"--service-url", strings.Join(ports.Nats, ","))
 	require.NoError(t, err)
 
@@ -151,7 +151,7 @@ func TestReq(t *testing.T) {
 	ports := ts.RunServerWithConfig(t, conf)
 
 	// with the captured ports, regenerate the operator jwt - we only need the client to update
-	_, _, err = ExecuteCmd(createEditOperatorCmd(),
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(),
 		"--service-url", strings.Join(ports.Nats, ","))
 	require.NoError(t, err)
 
@@ -192,7 +192,7 @@ func TestReply(t *testing.T) {
 	ports := ts.RunServerWithConfig(t, conf)
 
 	// with the captured ports, regenerate the operator jwt - we only need the client to update
-	_, _, err = ExecuteCmd(createEditOperatorCmd(),
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(),
 		"--service-url", strings.Join(ports.Nats, ","))
 	require.NoError(t, err)
 

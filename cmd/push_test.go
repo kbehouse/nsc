@@ -159,7 +159,7 @@ func deleteSetup(t *testing.T, del bool) (string, []string, *TestStore) {
 	ports := ts.RunServerWithConfig(t, serverconf)
 	require.NotNil(t, ports)
 	// only after server start as ports are not yet known in tests
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--account-jwt-server-url", ports.Nats[0])
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--account-jwt-server-url", ports.Nats[0])
 	require.NoError(t, err)
 	_, _, err = ExecuteCmd(CreatePushCmd(), "--all")
 	require.NoError(t, err)
@@ -306,13 +306,13 @@ func Test_SyncBadUrl(t *testing.T) {
 	require.NotNil(t, ports)
 	// deliberately test if http push to a nats server kills it or not
 	badUrl := strings.ReplaceAll(ports.Nats[0], "nats://", "http://")
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--account-jwt-server-url", badUrl)
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--account-jwt-server-url", badUrl)
 	require.NoError(t, err)
 	_, errOut, err := ExecuteCmd(CreatePushCmd(), "--all")
 	require.Error(t, err)
 	require.Contains(t, errOut, `Post "`+badUrl)
 	// Fix bad url
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--account-jwt-server-url", ports.Nats[0])
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--account-jwt-server-url", ports.Nats[0])
 	require.NoError(t, err)
 	// Try again, thus also testing if the server is still around
 	// Provide explicit system account user to connect

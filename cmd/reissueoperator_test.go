@@ -80,7 +80,7 @@ func Test_ReIssueStrict(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, op3.DidSign(ac))
 
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--require-signing-keys")
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--require-signing-keys")
 	require.NoError(t, err)
 	_, _, err = ExecuteCmd(createReIssueOperatorCmd(), "--convert-to-signing-key")
 	require.NoError(t, err)

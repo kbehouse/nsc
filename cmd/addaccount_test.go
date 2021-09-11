@@ -170,7 +170,7 @@ func Test_AddAccountInteractiveSigningKey(t *testing.T) {
 	defer ts.Done(t)
 
 	s1, pk1, _ := CreateOperatorKey(t)
-	_, _, err := ExecuteCmd(createEditOperatorCmd(), "--sk", pk1)
+	_, _, err := ExecuteCmd(CreateEditOperatorCmd(), "--sk", pk1)
 	require.NoError(t, err)
 
 	// sign with the custom key
@@ -252,7 +252,7 @@ func Test_AddAccountWithSigningKeyOnly(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, ts.KeyStore.HasPrivateKey(pk))
 
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--sk", pk)
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--sk", pk)
 	require.NoError(t, err)
 	oc, err := ts.Store.ReadOperatorClaim()
 	require.NoError(t, err)

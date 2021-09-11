@@ -38,15 +38,15 @@ func Test_EditOperator(t *testing.T) {
 	ts.AddAccount(t, "TEST")
 
 	tests := CmdTests{
-		{createEditOperatorCmd(), []string{"edit", "operator"}, nil, []string{"specify an edit option"}, true},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--system-account", "ABTFVAXATJEOKIBESJ3LO3JTAAMDCZ755DLAAGGSDMH5TU6HSFL7YNYY"}, nil, []string{"set system account"}, false},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--system-account", "TEST"}, nil, []string{"set system account"}, false},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--system-account", "DOESNOTEXIST"}, nil, []string{"account DOESNOTEXIST does not exist in the current operator"}, true},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--sk"}, nil, []string{"flag needs an argument"}, true},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--sk", "SAADOZRUTPZS6LIXS6CSSSW5GXY3DNMQMSDTVWHQNHQTIBPGNSADSMBPEU"}, nil, []string{"invalid operator signing key"}, true},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--sk", "OBMWGGURAFWMH3AFDX65TVIH4ZYSL7UKZ3LOH2ZRWIAU7PGZ3IJNR6W5"}, nil, []string{"edited operator"}, false},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--tag", "O", "--start", "2019-04-13", "--expiry", "2050-01-01"}, nil, []string{"edited operator"}, false},
-		{createEditOperatorCmd(), []string{"edit", "operator", "--require-signing-keys"}, nil, []string{"needs to be issued with a signing key first"}, true},
+		{CreateEditOperatorCmd(), []string{"edit", "operator"}, nil, []string{"specify an edit option"}, true},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--system-account", "ABTFVAXATJEOKIBESJ3LO3JTAAMDCZ755DLAAGGSDMH5TU6HSFL7YNYY"}, nil, []string{"set system account"}, false},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--system-account", "TEST"}, nil, []string{"set system account"}, false},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--system-account", "DOESNOTEXIST"}, nil, []string{"account DOESNOTEXIST does not exist in the current operator"}, true},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--sk"}, nil, []string{"flag needs an argument"}, true},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--sk", "SAADOZRUTPZS6LIXS6CSSSW5GXY3DNMQMSDTVWHQNHQTIBPGNSADSMBPEU"}, nil, []string{"invalid operator signing key"}, true},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--sk", "OBMWGGURAFWMH3AFDX65TVIH4ZYSL7UKZ3LOH2ZRWIAU7PGZ3IJNR6W5"}, nil, []string{"edited operator"}, false},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--tag", "O", "--start", "2019-04-13", "--expiry", "2050-01-01"}, nil, []string{"edited operator"}, false},
+		{CreateEditOperatorCmd(), []string{"edit", "operator", "--require-signing-keys"}, nil, []string{"needs to be issued with a signing key first"}, true},
 	}
 
 	tests.Run(t, "root", "edit")
@@ -105,9 +105,9 @@ func Test_EditOperatorRequireSigningKeys(t *testing.T) {
 	// Perform all operations that would end up signing account/user/activation jwt
 	_, _, err = ExecuteCmd(CreateAddOperatorCmd(), "--name", "O")
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--sk", "generate")
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--sk", "generate")
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--require-signing-keys")
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--require-signing-keys")
 	require.NoError(t, err)
 	_, _, err = ExecuteCmd(CreateAddAccountCmd(), "--name", "EXPORTER")
 	require.NoError(t, err)
@@ -217,7 +217,7 @@ func Test_EditOperatorSigningKeys(t *testing.T) {
 	s1, pk1, _ := CreateOperatorKey(t)
 	_, pk2, _ := CreateOperatorKey(t)
 
-	_, _, err := ExecuteCmd(createEditOperatorCmd(), "--sk", pk1, "--sk", pk2, "--sk", "generate")
+	_, _, err := ExecuteCmd(CreateEditOperatorCmd(), "--sk", pk1, "--sk", pk2, "--sk", "generate")
 	require.NoError(t, err)
 
 	d, err := ts.Store.Read(store.JwtName("O"))
@@ -237,7 +237,7 @@ func Test_EditOperatorSigningKeys(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, oc.DidSign(ac))
 
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--rm-sk", pk1)
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--rm-sk", pk1)
 	require.NoError(t, err)
 
 	d, err = ts.Store.Read(store.JwtName("O"))
@@ -261,7 +261,7 @@ func Test_EditOperatorServiceURLs(t *testing.T) {
 	require.NoError(t, err)
 	require.Len(t, oc.OperatorServiceURLs, 0)
 
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--service-url", u1, "--service-url", u2)
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--service-url", u1, "--service-url", u2)
 	require.NoError(t, err)
 
 	oc, err = ts.Store.ReadOperatorClaim()
@@ -269,7 +269,7 @@ func Test_EditOperatorServiceURLs(t *testing.T) {
 	require.Contains(t, oc.OperatorServiceURLs, u1)
 	require.Contains(t, oc.OperatorServiceURLs, u2)
 
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--rm-service-url", u1)
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--rm-service-url", u1)
 	require.NoError(t, err)
 	oc, err = ts.Store.ReadOperatorClaim()
 	require.NoError(t, err)
@@ -291,7 +291,7 @@ func Test_EditOperatorServiceURLsInteractive(t *testing.T) {
 	// system account (defaults to SYS), add signing key
 	inputs := []interface{}{"0", "0", true, "xxx", false, as, true, u1, true, u2, false, true, false, false}
 
-	_, _, err := ExecuteInteractiveCmd(createEditOperatorCmd(), inputs)
+	_, _, err := ExecuteInteractiveCmd(CreateEditOperatorCmd(), inputs)
 	require.NoError(t, err)
 
 	oc, err := ts.Store.ReadOperatorClaim()
@@ -305,7 +305,7 @@ func Test_EditOperatorServiceURLsInteractive(t *testing.T) {
 	// valid from, valid until, acc jwt server, add service url, remove server urls, add signing key
 	inputs = []interface{}{"0", "0", true, []int{0}, false, "", false, true, []int{0}, false, false}
 
-	_, _, err = ExecuteInteractiveCmd(createEditOperatorCmd(), inputs)
+	_, _, err = ExecuteInteractiveCmd(CreateEditOperatorCmd(), inputs)
 	require.NoError(t, err)
 	oc, err = ts.Store.ReadOperatorClaim()
 	require.NoError(t, err)

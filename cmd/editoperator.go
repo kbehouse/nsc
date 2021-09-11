@@ -26,7 +26,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createEditOperatorCmd() *cobra.Command {
+func CreateEditOperatorCmd() *cobra.Command {
 	var params EditOperatorParams
 	cmd := &cobra.Command{
 		Use:          "operator",
@@ -52,7 +52,7 @@ func createEditOperatorCmd() *cobra.Command {
 }
 
 func init() {
-	editCmd.AddCommand(createEditOperatorCmd())
+	editCmd.AddCommand(CreateEditOperatorCmd())
 }
 
 type EditOperatorParams struct {

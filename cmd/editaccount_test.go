@@ -221,7 +221,7 @@ func Test_EditAccountSk(t *testing.T) {
 	pSk, err := sk.PublicKey()
 	require.NoError(t, err)
 
-	_, _, err = ExecuteCmd(createEditOperatorCmd(), "--sk", pSk)
+	_, _, err = ExecuteCmd(CreateEditOperatorCmd(), "--sk", pSk)
 	require.NoError(t, err)
 
 	ts.AddAccountWithSigner(t, "A", sk)
