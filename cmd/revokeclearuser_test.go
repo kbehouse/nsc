@@ -32,7 +32,7 @@ func TestRevokeClearUser(t *testing.T) {
 	ts.AddUser(t, "A", "two")
 	ts.AddUser(t, "A", "three")
 
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "one")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "one")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("A")
@@ -43,7 +43,7 @@ func TestRevokeClearUser(t *testing.T) {
 	require.NoError(t, err)
 	require.Contains(t, ac.Revocations, u.Subject)
 
-	_, _, err = ExecuteCmd(createClearRevokeUserCmd(), "--name", "one")
+	_, _, err = ExecuteCmd(CreateClearRevokeUserCmd(), "--name", "one")
 	require.NoError(t, err)
 
 	ac, err = ts.Store.ReadAccountClaim("A")
@@ -51,7 +51,7 @@ func TestRevokeClearUser(t *testing.T) {
 	require.Len(t, ac.Revocations, 0)
 
 	// error if not revoked
-	_, _, err = ExecuteCmd(createClearRevokeUserCmd(), "--name", "one")
+	_, _, err = ExecuteCmd(CreateClearRevokeUserCmd(), "--name", "one")
 	require.Error(t, err)
 }
 
@@ -66,7 +66,7 @@ func TestRevokeClearUserInteractive(t *testing.T) {
 	ts.AddUser(t, "B", "one")
 	ts.AddUser(t, "B", "two")
 
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "one", "--account", "A")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "one", "--account", "A")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("A")
@@ -79,7 +79,7 @@ func TestRevokeClearUserInteractive(t *testing.T) {
 
 	// first account and first user
 	input := []interface{}{0, 0}
-	cmd := createClearRevokeUserCmd()
+	cmd := CreateClearRevokeUserCmd()
 	HoistRootFlags(cmd)
 	cli.LogFn = t.Log
 	_, _, err = ExecuteInteractiveCmd(cmd, input, "-i")
@@ -94,7 +94,7 @@ func TestClearRevokeUserUserAndKey(t *testing.T) {
 	ts := NewTestStore(t, "O")
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
-	_, _, err := ExecuteCmd(createClearRevokeUserCmd(), "--name", "a", "--user-public-key", "UAUGJSHSTZY4ESHTL32CYYQNGT6MHXDQY6APMFMVRXWZN76RHE2IRN5O")
+	_, _, err := ExecuteCmd(CreateClearRevokeUserCmd(), "--name", "a", "--user-public-key", "UAUGJSHSTZY4ESHTL32CYYQNGT6MHXDQY6APMFMVRXWZN76RHE2IRN5O")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "user and user-public-key are mutually exclusive")
 }
@@ -104,7 +104,7 @@ func TestClearRevokeUserNotFound(t *testing.T) {
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
 	ts.AddUser(t, "A", "U")
-	_, _, err := ExecuteCmd(createClearRevokeUserCmd(), "--name", "uu")
+	_, _, err := ExecuteCmd(CreateClearRevokeUserCmd(), "--name", "uu")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "not found")
 }
@@ -114,9 +114,9 @@ func TestClearRevokeDefaultUser(t *testing.T) {
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
 	ts.AddUser(t, "A", "U")
-	_, _, err := ExecuteCmd(createRevokeUserCmd())
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd())
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createClearRevokeUserCmd())
+	_, _, err = ExecuteCmd(CreateClearRevokeUserCmd())
 	require.NoError(t, err)
 }
 
@@ -125,9 +125,9 @@ func TestClearRevokeRevocationNotFound(t *testing.T) {
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
 	ts.AddUser(t, "A", "U")
-	_, _, err := ExecuteCmd(createRevokeUserCmd())
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd())
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createClearRevokeUserCmd(), "-u", "*")
+	_, _, err = ExecuteCmd(CreateClearRevokeUserCmd(), "-u", "*")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "user with public key * is not revoked")
 }
@@ -136,9 +136,9 @@ func TestClearRevokeAllUsers(t *testing.T) {
 	ts := NewTestStore(t, "O")
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "-u", "*")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "-u", "*")
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createClearRevokeUserCmd(), "-u", "*")
+	_, _, err = ExecuteCmd(CreateClearRevokeUserCmd(), "-u", "*")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("A")

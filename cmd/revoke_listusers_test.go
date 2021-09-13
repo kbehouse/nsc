@@ -34,13 +34,13 @@ func TestRevokeListUsers(t *testing.T) {
 	ts.AddUser(t, "A", "two")
 	ts.AddUser(t, "A", "three")
 
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "one", "--at", "1001")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "one", "--at", "1001")
 	require.NoError(t, err)
 
-	_, _, err = ExecuteCmd(createRevokeUserCmd(), "--name", "two", "--at", "2001")
+	_, _, err = ExecuteCmd(CreateRevokeUserCmd(), "--name", "two", "--at", "2001")
 	require.NoError(t, err)
 
-	stdout, _, err := ExecuteCmd(createRevokeListUsersCmd())
+	stdout, _, err := ExecuteCmd(CreateRevokeListUsersCmd())
 	require.NoError(t, err)
 
 	u, err := ts.Store.ReadUserClaim("A", "one")
@@ -57,7 +57,7 @@ func TestRevokeListUsers(t *testing.T) {
 func TestRevokeListUsersNoAccount(t *testing.T) {
 	ts := NewTestStore(t, "revoke_clear_user")
 	defer ts.Done(t)
-	_, _, err := ExecuteInteractiveCmd(createRevokeListUsersCmd(), []interface{}{})
+	_, _, err := ExecuteInteractiveCmd(CreateRevokeListUsersCmd(), []interface{}{})
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "no accounts defined")
 }
@@ -66,7 +66,7 @@ func TestRevokeListUsersNoRevocations(t *testing.T) {
 	ts := NewTestStore(t, "revoke_clear_user")
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
-	_, _, err := ExecuteCmd(createRevokeListUsersCmd())
+	_, _, err := ExecuteCmd(CreateRevokeListUsersCmd())
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "does not have revoked users")
 }
@@ -75,14 +75,14 @@ func TestRevokeListUsersAllUsers(t *testing.T) {
 	ts := NewTestStore(t, "revoke_clear_user")
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "-u", "*")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "-u", "*")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("A")
 	require.NoError(t, err)
 	require.Contains(t, ac.Revocations, jwt.All)
 
-	stdout, _, err := ExecuteCmd(createRevokeListUsersCmd())
+	stdout, _, err := ExecuteCmd(CreateRevokeListUsersCmd())
 	require.NoError(t, err)
 	require.Contains(t, stdout, "* [All Users]")
 }

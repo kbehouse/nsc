@@ -34,7 +34,7 @@ func TestRevokeUser(t *testing.T) {
 	ts.AddUser(t, "A", "two")
 	ts.AddUser(t, "A", "three")
 
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "one")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "one")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("A")
@@ -45,7 +45,7 @@ func TestRevokeUser(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, ac.IsClaimRevoked(u))
 
-	_, _, err = ExecuteCmd(createRevokeUserCmd(), "--name", "two")
+	_, _, err = ExecuteCmd(CreateRevokeUserCmd(), "--name", "two")
 	require.NoError(t, err)
 
 	ac, err = ts.Store.ReadAccountClaim("A")
@@ -57,7 +57,7 @@ func TestRevokeUser(t *testing.T) {
 	require.True(t, ac.IsClaimRevoked(u))
 
 	// Double doesn't do anything
-	_, _, err = ExecuteCmd(createRevokeUserCmd(), "--name", "two")
+	_, _, err = ExecuteCmd(CreateRevokeUserCmd(), "--name", "two")
 	require.NoError(t, err)
 
 	ac, err = ts.Store.ReadAccountClaim("A")
@@ -74,7 +74,7 @@ func TestRevokeUserAt(t *testing.T) {
 	ts.AddUser(t, "A", "two")
 	ts.AddUser(t, "A", "three")
 
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "one", "--at", "1000")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "one", "--at", "1000")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("A")
@@ -87,7 +87,7 @@ func TestRevokeUserAt(t *testing.T) {
 	_, ok := ac.Revocations[u.Subject]
 	require.True(t, ok)
 
-	_, _, err = ExecuteCmd(createRevokeUserCmd(), "--name", "two", "--at", strconv.Itoa(int(time.Now().Unix())))
+	_, _, err = ExecuteCmd(CreateRevokeUserCmd(), "--name", "two", "--at", strconv.Itoa(int(time.Now().Unix())))
 	require.NoError(t, err)
 
 	ac, err = ts.Store.ReadAccountClaim("A")
@@ -111,7 +111,7 @@ func Test_RevokeUserAccountNameRequired(t *testing.T) {
 	ts.AddAccount(t, "B")
 	ts.AddUser(t, "B", "one")
 
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "one")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "one")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("B")
@@ -137,7 +137,7 @@ func TestRevokeUserInteractive(t *testing.T) {
 	ts.AddUser(t, "B", "two")
 
 	input := []interface{}{0, true, 0, "0"}
-	cmd := createRevokeUserCmd()
+	cmd := CreateRevokeUserCmd()
 	HoistRootFlags(cmd)
 	_, _, err := ExecuteInteractiveCmd(cmd, input, "-i")
 	require.NoError(t, err)
@@ -150,7 +150,7 @@ func TestRevokeUserInteractive(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, ac.IsClaimRevoked(u))
 
-	cmd = createRevokeUserCmd()
+	cmd = CreateRevokeUserCmd()
 	HoistRootFlags(cmd)
 	input = []interface{}{0, false, keyToRevoke, "0"}
 	_, _, err = ExecuteInteractiveCmd(cmd, input, "-i")
@@ -174,7 +174,7 @@ func TestRevokeUserByNkey(t *testing.T) {
 	u, err := ts.Store.ReadUserClaim("A", "one")
 	require.NoError(t, err)
 
-	cmd := createRevokeUserCmd()
+	cmd := CreateRevokeUserCmd()
 	HoistRootFlags(cmd)
 	_, _, err = ExecuteCmd(cmd, "-u", u.Subject)
 	require.NoError(t, err)
@@ -201,7 +201,7 @@ func TestRevokeUserNameKey(t *testing.T) {
 	ts := NewTestStore(t, "O")
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "a", "--user-public-key", "UAUGJSHSTZY4ESHTL32CYYQNGT6MHXDQY6APMFMVRXWZN76RHE2IRN5O")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "a", "--user-public-key", "UAUGJSHSTZY4ESHTL32CYYQNGT6MHXDQY6APMFMVRXWZN76RHE2IRN5O")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "user and user-public-key are mutually exclusive")
 }
@@ -211,11 +211,11 @@ func TestRevokeUserNameNotFound(t *testing.T) {
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
 	ts.AddUser(t, "A", "U")
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "--name", "a")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "--name", "a")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "not found")
 
-	_, _, err = ExecuteCmd(createRevokeUserCmd(), "--name", "U")
+	_, _, err = ExecuteCmd(CreateRevokeUserCmd(), "--name", "U")
 	require.NoError(t, err)
 	ac, err := ts.Store.ReadAccountClaim("A")
 	require.NoError(t, err)
@@ -229,7 +229,7 @@ func TestRevokeDefaultUser(t *testing.T) {
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
 	ts.AddUser(t, "A", "U")
-	_, _, err := ExecuteCmd(createRevokeUserCmd())
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd())
 	require.NoError(t, err)
 
 	upk := ts.GetUserPublicKey(t, "A", "U")
@@ -245,7 +245,7 @@ func TestRevokeUserRequired(t *testing.T) {
 	ts.AddAccount(t, "A")
 	ts.AddUser(t, "A", "U")
 	ts.AddUser(t, "A", "Y")
-	_, _, err := ExecuteCmd(createRevokeUserCmd())
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd())
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "no default user available")
 }
@@ -254,7 +254,7 @@ func TestRevokeAllUsers(t *testing.T) {
 	ts := NewTestStore(t, "O")
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "-u", "*")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "-u", "*")
 	require.NoError(t, err)
 
 	ac, err := ts.Store.ReadAccountClaim("A")
@@ -266,7 +266,7 @@ func TestRevokeBadUnixTime(t *testing.T) {
 	ts := NewTestStore(t, "O")
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "-u", "*", "--at", "hello")
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "-u", "*", "--at", "hello")
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "invalid argument")
 }
@@ -276,7 +276,7 @@ func TestRevokeRFC3339Time(t *testing.T) {
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
 	at := time.Now()
-	_, _, err := ExecuteCmd(createRevokeUserCmd(), "-u", "*", "--at", at.Format(time.RFC3339))
+	_, _, err := ExecuteCmd(CreateRevokeUserCmd(), "-u", "*", "--at", at.Format(time.RFC3339))
 	require.NoError(t, err)
 
 	c, err := ts.Store.ReadAccountClaim("A")
@@ -290,7 +290,7 @@ func TestRevokeBadUnixTimeInteractive(t *testing.T) {
 	defer ts.Done(t)
 	ts.AddAccount(t, "A")
 	input := []interface{}{"*", "hello"}
-	_, _, err := ExecuteInteractiveCmd(createRevokeUserCmd(), input)
+	_, _, err := ExecuteInteractiveCmd(CreateRevokeUserCmd(), input)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), `provided value "hello" is not`)
 }

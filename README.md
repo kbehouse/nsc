@@ -15,3 +15,12 @@ CreateListUsersCmd
 
 createPushCmd ->
 CreatePushCmd
+
+createRevokeUserCmd ->
+CreateRevokeUserCmd
+
+createClearRevokeUserCmd ->
+CreateClearRevokeUserCmd
+
+createRevokeListUsersCmd ->
+CreateRevokeListUsersCmd

@@ -27,7 +27,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createRevokeUserCmd() *cobra.Command {
+func CreateRevokeUserCmd() *cobra.Command {
 	var params RevokeUserParams
 	cmd := &cobra.Command{
 		Use:          "add-user",
@@ -49,7 +49,7 @@ func createRevokeUserCmd() *cobra.Command {
 }
 
 func init() {
-	revokeCmd.AddCommand(createRevokeUserCmd())
+	revokeCmd.AddCommand(CreateRevokeUserCmd())
 }
 
 // RevokeUserParams hold the info necessary to add a user to the revocation list in an account

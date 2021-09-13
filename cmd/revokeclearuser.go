@@ -25,7 +25,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func createClearRevokeUserCmd() *cobra.Command {
+func CreateClearRevokeUserCmd() *cobra.Command {
 	var params ClearRevokeUserParams
 	cmd := &cobra.Command{
 		Use:          "delete-user",
@@ -45,7 +45,7 @@ func createClearRevokeUserCmd() *cobra.Command {
 }
 
 func init() {
-	revokeCmd.AddCommand(createClearRevokeUserCmd())
+	revokeCmd.AddCommand(CreateClearRevokeUserCmd())
 }
 
 // ClearRevokeUserParams hold the info necessary to add a user to the revocation list in an account

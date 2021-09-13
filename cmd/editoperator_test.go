@@ -169,7 +169,7 @@ func Test_EditOperatorRequireSigningKeys(t *testing.T) {
 	require.NoError(t, err)
 	pubUk, err := uk.PublicKey()
 	require.NoError(t, err)
-	_, _, err = ExecuteCmd(createRevokeUserCmd(), "--account", "A", "--user-public-key", pubUk)
+	_, _, err = ExecuteCmd(CreateRevokeUserCmd(), "--account", "A", "--user-public-key", pubUk)
 	require.NoError(t, err)
 	checkAcc(t, ts, "A")
 }

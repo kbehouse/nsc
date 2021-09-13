@@ -25,7 +25,7 @@ import (
 	"github.com/xlab/tablewriter"
 )
 
-func createRevokeListUsersCmd() *cobra.Command {
+func CreateRevokeListUsersCmd() *cobra.Command {
 	var params RevokeListUserParams
 	cmd := &cobra.Command{
 		Use:          "list-users",
@@ -43,7 +43,7 @@ func createRevokeListUsersCmd() *cobra.Command {
 }
 
 func init() {
-	revokeCmd.AddCommand(createRevokeListUsersCmd())
+	revokeCmd.AddCommand(CreateRevokeListUsersCmd())
 }
 
 // RevokeListUserParams hold the info necessary to add a user to the revocation list in an account
